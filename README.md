@@ -3,20 +3,23 @@
 
 ---
 ## Descripción de la arquitectura implementada
-![](img/diagram.png)
-El cliente se conecta a un REST API que provee un index.html que explica cómo usar el API y a través del botón proporcionado; se llama a una función del JavaScript para que ésta, tomando el valor del campo de entrada, se comunique con el SpringBoot (REST API) mediante axios y de allí se obtenga la fórmula y valores para realizar el cálculo/conversión. Finalmente todo se despliega en el PaaS de Heroku.
-
+![](img/preview.PNG)
+![](img/packages.png)
+![](img/deployment.png)
+La arquitectura MVC (model-view-controller) consiste en un cliente (naturalmente web) quien se conecta a un REST API que usa el framework de SpringBoot el cual provee una vista (que usa bootstrap) que al ingresarle datos en los campos de entrada y al oprimir el botón proporcionado, toma el valor de dichos campos de entrada y, se comunique con una funcion del controlador (el cual es un JavaScript que maneja mensajes tipo JSON implementado sobre axios); este a su vez llama al otro controlador (escrito en Java) para que maneje la solicitud(es) GET. Así pues, se llama a los servicios quienes consultan a la persistencia para mantener en un contenedor temporal las películas que se vayan obteniendo. Más tarde, este último llama a el modelo quien es el que hace la consulta como tal (y el llamado al API externo de OMDb API - The Open Movie Database por medio de una HttpConnection; y de ese modo se obtenga y se muestre la pelicula por pantalla. Finalmente todo se despliega en el PaaS Heroku.
+ 
 ---
+## Extensión
+Para extender el la implementación basta con crear una HttpConnection que implemente el API externo (ya que la estructura en la URL cambia según el API) y así se puedan tener distintas fuentes de consulta de películas.
+
 ## Atributos de calidad
-- Usabilidad: se tiene usabilidad al ser una página web agradable con explicación que permite al usuario tener una guía.
-- Mantenibilidad: se hace posiblee extender el código mediante clases, métodos o cualquier otra función extra que se requiera.
+- Usabilidad: se tiene usabilidad al ser una página web agradable con fácil uso.
+- Mantenibilidad: se hace posiblee extender el código mediante clases, métodos o cualquier otra función extra que se requiera, además se mantiene persistencia de los datos.
 
 ---
 ## Limitaciones de la arquitectura
-- No hace llamados a APIs externos por lo tanto es únicamente dependiente de las fórmulas que se encuentran embebidas en el API, entonces ante un cambio en las fórmulas, habría que actualizar la lógica.
-- No mantiene registros o trazas de lo que se ha realizado entonces no posee persistencia afectando el atributo de calidad de Funcionalidad.
-- No hace uso de autenticación (por TOKEN) afectando la seguridad del sistema.
+- No hace uso de autenticación (por TOKEN).
 
 ---
-### ARSW-2018-2
-### Daniel Beltrán
+#### ARSW-2018-2
+#### Daniel Beltrán

@@ -5,29 +5,16 @@
  */
 
 
-var RestControllerModule = (function () {
+var MicroserviceMoviesRESTController = (function () {
+    var url = '';
 
-  var getOrders = function (callback) {
-    // todo implement
-  };
+    function getMovie(movie, year) {
+        return axios.get(url + "/movies/" + movie + "/" + year).then(function (response) {
+            return response.data;
+        })
+    }
 
-  var updateOrder = function (order, callback) {
-    // todo implement
-  };
-
-  var deleteOrder = function (orderId, callback) {
-    // todo implement
-  };
-
-  var createOrder = function (order, callback) {
-    // todo implement
-  };
-
-  return {
-    getOrders: getOrders,
-    updateOrder: updateOrder,
-    deleteOrder: deleteOrder,
-    createOrder: createOrder
-  };
-
+    return {
+        getMovie: getMovie
+    };
 })();

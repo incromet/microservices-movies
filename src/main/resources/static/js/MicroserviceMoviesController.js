@@ -4,41 +4,134 @@
  * and open the template in the editor.
  */
 
-var ControllerModule = (function () {
+var MicroserviceMoviesController = (function () {
 
-  var showOrdersByTable = function () {
-    //Todo implement
-
-    var callback = {
-
-        onSuccess: function(ordersList){
-            //Todo implement
-
-            },
-        onFailed: function(exception){
-        //Todo implement
+    function clearTables() {
+        var content = document.getElementById("content");
+        var tables = document.getElementsByClassName("table");
+        while (tables.length > 5) {
+            content.removeChild(tables[0]);
+        }
+        var titles = document.getElementsByClassName("table-title");
+        while (titles.length > 5) {
+            content.removeChild(titles[0]);
         }
     }
-    //RestaurantRestController.getOrders(callback)
-  };
 
-  var updateOrder = function () {
-    // todo implement
-  };
 
-  var deleteOrderItem = function (itemName) {
-    // todo implement
-  };
+    function addMovie(Movie) {
+        console.log(Movie)
+        
+        var tableOrder = document.createElement("table");
+        var header = document.createElement("tr");
 
-  var addItemToOrder = function (orderId, item) {
-    // todo implement
-  };
+        var cell = document.createElement("th");
+        cell.innerHTML = "Poster";
+        header.appendChild(cell);
 
-  return {
-    showOrdersByTable: showOrdersByTable,
-    updateOrder: updateOrder,
-    deleteOrderItem: deleteOrderItem,
-    addItemToOrder: addItemToOrder
-  };
+        var cell = document.createElement("th");
+        cell.innerHTML = "Plot";
+        header.appendChild(cell);
 
+        var cell = document.createElement("th");
+        cell.innerHTML = "Rated";
+        header.appendChild(cell);
+
+        var cell = document.createElement("th");
+        cell.innerHTML = "Director";
+        header.appendChild(cell);
+
+        var cell = document.createElement("th");
+        cell.innerHTML = "Runtime";
+        header.appendChild(cell);
+
+        var cell = document.createElement("th");
+        cell.innerHTML = "Actors";
+        header.appendChild(cell);
+
+        var cell = document.createElement("th");
+        cell.innerHTML = "Awards";
+        header.appendChild(cell);
+
+        var cell = document.createElement("th");
+        cell.innerHTML = "Country";
+        header.appendChild(cell);
+
+        tableOrder.appendChild(header);
+
+        tableOrder.setAttribute("class", "table");
+        
+        var row = document.createElement("tr");
+
+        var cell = document.createElement("td");
+        cell.innerHTML = "<img src=\"Movie.Poster\" width=\"50px\" height=\"100px\">";
+        
+        row.appendChild(cell);
+        
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Plot;
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Rated;
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Director;
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Runtime;
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Actors;
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Awards;
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        cell.innerHTML = Movie.Country;
+        row.appendChild(cell);
+
+        tableOrder.appendChild(row);
+            
+        var firstTable = document.getElementById("HTMLtable");
+
+        document.getElementById("tablahere").appendChild(tableOrder);
+        
+    }
+
+    function getSelected(id) {
+        var selectedTable = document.getElementById(id);
+        var tableLabel = selectedTable.options[selectedTable.selectedIndex].value;
+        return tableLabel;
+    }
+
+
+    function loadMovie() {
+        clearTables();
+        loadData(addMovie);
+    }
+
+    function loadData(callback) {
+        axios.all([filterSelected()])
+                .then(axios.spread(function (movie) {
+                    callback(movie);
+                }));
+    }
+
+    function filterSelected() {
+        var name = document.getElementById("name").value;
+        var year = document.getElementById("year").value;
+        
+        return MicroserviceMoviesRESTController.getMovie(name, year);
+    }
+
+
+    return {
+        loadMovie: loadMovie
+    };
 })();
