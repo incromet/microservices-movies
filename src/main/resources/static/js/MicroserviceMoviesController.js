@@ -64,8 +64,13 @@ var MicroserviceMoviesController = (function () {
         var row = document.createElement("tr");
 
         var cell = document.createElement("td");
-        cell.innerHTML = "<img src=\"Movie.Poster\" width=\"50px\" height=\"100px\">";
+        var image = document.createElement("img");
         
+        image.setAttribute("src", Movie.Poster);
+        image.setAttribute("width", "60px");
+        image.setAttribute("height", "100px");
+        cell.appendChild(image);
+
         row.appendChild(cell);
         
         var cell = document.createElement("td");
